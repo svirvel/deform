@@ -77,17 +77,7 @@ class CMakeBuild(build_ext):
 
 
 setup(
-    name='pydeform',
-    version='0.5.2',
-    author='Simon Ekström',
-    author_email='',
-    description='',
-    long_description=readme,
-    long_description_content_type='text/markdown',
-    install_requires=['python-stk', 'numpy', 'PyYAML'],
-    packages=['pydeform'],
     ext_modules=[CMakeExtension('_pydeform', '.')],
     cmdclass={'build_ext': CMakeBuild},
-    zip_safe=False,
 )
 
