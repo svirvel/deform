@@ -1,6 +1,6 @@
 [submodule "third_party/stk"]
 	path = third_party/stk
-	url = https://github.com/simeks/stk.git
+	url = https://github.com/svirvel/stk.git
 [submodule "third_party/yaml-cpp"]
 	path = third_party/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
