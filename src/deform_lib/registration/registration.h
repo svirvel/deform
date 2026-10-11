@@ -1,5 +1,6 @@
 #pragma once
 
+#include <deform_lib/config.h>
 #include <deform_lib/registration/settings.h>
 
 #include <stk/image/volume.h>
@@ -43,7 +44,7 @@ stk::Volume registration(
         const stk::Volume& regularization_map,
 #endif
         const int num_threads
-#ifdef DF_USE_CUDA
+#ifdef DF_USE_GPU
         , bool use_gpu
 #endif
 );

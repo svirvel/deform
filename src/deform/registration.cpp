@@ -43,10 +43,10 @@ bool RegistrationCommand::_parse_arguments(void)
     _args.add_group();
     _args.add_option("num_threads", "--num-threads", "Maximum number of threads");
 
-#ifdef DF_USE_CUDA
+#ifdef DF_USE_GPU
     _args.add_group();
     _args.add_flag("use_gpu", "--gpu", "Enables GPU supported registration");
-#endif // DF_USE_CUDA
+#endif // DF_USE_GPU
 
     return _args.parse();
 }
@@ -231,7 +231,7 @@ int RegistrationCommand::_execute(void)
     }
 #endif
 
-#ifdef DF_USE_CUDA
+#ifdef DF_USE_GPU
     bool use_gpu = _args.is_set("use_gpu");
 #endif
 
@@ -252,7 +252,7 @@ int RegistrationCommand::_execute(void)
                            regularization_map,
                         #endif
                            _args.get<int>("num_threads", 0)
-                        #ifdef DF_USE_CUDA
+                        #ifdef DF_USE_GPU
                            , use_gpu
                         #endif
                            );

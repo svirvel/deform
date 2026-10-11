@@ -6,6 +6,7 @@ set(DEFORM_TEST_SRCS
     "test_main.cpp"
     "test_settings.cpp"
     "test_landmarks.cpp"
+    "test_webgpu.cpp"
 )
 
 add_executable(deform_test ${DEFORM_TEST_SRCS})

@@ -11,6 +11,9 @@
 #ifdef DF_USE_CUDA
     #include <deform_lib/registration/gpu_registration_engine.h>
 #endif
+#ifdef DF_USE_WEBGPU
+    #include <deform_lib/registration/webgpu_registration_engine.h>
+#endif
 
 
 #include <stk/common/assert.h>
@@ -263,15 +266,22 @@ stk::Volume registration(
         const stk::Volume& regularization_map,
 #endif
         const int num_threads
-#ifdef DF_USE_CUDA
+#ifdef DF_USE_GPU
         , bool use_gpu
 #endif
         )
 {
-#ifdef DF_USE_CUDA
+#ifdef DF_USE_GPU
+    // CUDA is preferred if the build supports both CUDA and WebGPU
+    #ifdef DF_USE_CUDA
+        typedef GpuRegistrationEngine GpuEngine;
+    #else
+        typedef WebGpuRegistrationEngine GpuEngine;
+    #endif
+
     // TODO: Check cuda availability
     if (use_gpu) {
-        return registration<GpuRegistrationEngine>(
+        return registration<GpuEngine>(
             settings,
             fixed_volumes,
             moving_volumes,
@@ -307,7 +317,7 @@ stk::Volume registration(
 #endif
             num_threads
         );
-#ifdef DF_USE_CUDA
+#ifdef DF_USE_GPU
     }
 #endif
 }

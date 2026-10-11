@@ -77,6 +77,7 @@ The build can be configured with the following CMake boolean options:
 + `DF_BUILD_EXECUTABLE`: Build registration executable (default: `ON`)
 + `DF_BUILD_PYTHON_WRAPPER`: Build Python wrapper (default: `OFF`)
 + `DF_USE_CUDA`: Enable CUDA support (default: `OFF`)
++ `DF_USE_WEBGPU`: Enable WebGPU support (default: `OFF`)
 + `DF_USE_ISPC`: Enable ISPC support (default: `OFF`)
 + `DF_WARNINGS_ARE_ERRORS`: Warnings are treated as errors (default: `OFF`)
 + `DF_BUILD_WITH_DEBUG_INFO`: Include debug info in release builds (default: `OFF`)
@@ -85,6 +86,18 @@ The build can be configured with the following CMake boolean options:
 + `DF_STACK_TRACE`: Print a stack trace on errors (default: `OFF`)
 + `DF_ENABLE_MICROPROFILE`: Enable `microprofile` profiler (default: `OFF`)
 + `DF_ENABLE_NVTOOLSEXT`: Enable `nvtoolsext` profiler (default: `OFF`)
+
+### GPU support
+
+GPU supported registration is available through either CUDA (`DF_USE_CUDA`) or WebGPU (`DF_USE_WEBGPU`). In both cases it is enabled with `use_gpu=True` in Python, or `--gpu` for the executable. CUDA is used if both are enabled.
+
+WebGPU runs on GPUs from any vendor, through Vulkan, Metal or DirectX 12. It is built on [wgpu-native](https://github.com/gfx-rs/wgpu-native), which is downloaded by CMake. To use an already downloaded release, set `-DWGPU_NATIVE_DIR=<path>`.
+
+```
+> sh build_python.sh -DDF_USE_WEBGPU=ON
+```
+
+See [docs/webgpu.md](docs/webgpu.md) for details. The WebGPU support has so far only been tested on Linux. Volumes are limited by the largest buffer the GPU allows, commonly 2 GB, which corresponds to a displacement field of about 500^3 voxels.
 
 ### GCC issues
 

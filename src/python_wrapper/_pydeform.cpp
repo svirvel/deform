@@ -406,8 +406,8 @@ num_threads: int
     number is selected automatically.
 
 use_gpu: bool
-    If `True`, use GPU acceleration from a CUDA device.
-    Requires a build with CUDA support.
+    If `True`, use GPU acceleration. Requires a build with
+    CUDA or WebGPU support.
 
 Returns
 -------
@@ -442,9 +442,9 @@ stk::Volume registration_wrapper(
         const bool use_gpu
 )
 {
-    #ifndef DF_USE_CUDA
+    #ifndef DF_USE_GPU
     if (use_gpu) {
-        throw std::invalid_argument("This build of pydeform has no CUDA support!");
+        throw std::invalid_argument("This build of pydeform has no GPU support!");
     }
     #endif
 
@@ -543,7 +543,7 @@ stk::Volume registration_wrapper(
                                             regularization_map,
                                         #endif
                                             num_threads
-                                        #ifdef DF_USE_CUDA
+                                        #ifdef DF_USE_GPU
                                             , use_gpu
                                         #endif
                                             );
@@ -722,7 +722,7 @@ PYBIND11_MODULE(_pydeform, m)
         return deform::version_string();
     });
     m.def("has_gpu", [](){
-        #ifdef DF_USE_CUDA
+        #ifdef DF_USE_GPU
             return true;
         #else
             return false;

@@ -103,6 +103,28 @@ if (DF_USE_CUDA)
     )
 endif ()
 
+if (DF_USE_WEBGPU)
+    set(DEFORM_LIB_SRCS
+        ${DEFORM_LIB_SRCS}
+        "filters/webgpu/filters.cpp"
+        "filters/webgpu/filters.h"
+
+        "registration/webgpu/block_grid.h"
+        "registration/webgpu/cost_functions.cpp"
+        "registration/webgpu/cost_functions.h"
+        "registration/webgpu/displacement_field.cpp"
+        "registration/webgpu/displacement_field.h"
+        "registration/webgpu/shaders.cpp"
+        "registration/webgpu/shaders.h"
+        "registration/webgpu/voxel_constraints.cpp"
+        "registration/webgpu/voxel_constraints.h"
+        "registration/webgpu_graph_cut_optimizer.h"
+        "registration/webgpu_graph_cut_optimizer.inl"
+        "registration/webgpu_registration_engine.cpp"
+        "registration/webgpu_registration_engine.h"
+    )
+endif ()
+
 if (DF_ENABLE_MICROPROFILE)
     set(DEFORM_LIB_SRCS
         ${DEFORM_LIB_SRCS}

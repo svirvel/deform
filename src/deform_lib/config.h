@@ -11,3 +11,8 @@
     #define DF_OUTPUT_VOLUME_ENERGY
     //#define DF_OUTPUT_DEBUG_VOLUMES
 #endif
+
+// GPU supported registration is available through either CUDA or WebGPU
+#if defined(DF_USE_CUDA) || defined(DF_USE_WEBGPU)
+    #define DF_USE_GPU
+#endif

@@ -5,7 +5,8 @@
 #include <cstring>
 #include <fstream>
 
-using namespace Catch;
+using Catch::Detail::Approx;
+using Catch::Matchers::Contains;
 
 namespace {
 const char* sample_settings = R"(
