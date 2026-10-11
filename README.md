@@ -23,6 +23,7 @@ Note: to enable GPU-supported registration you're required to compile the softwa
 
 ### Prerequisites
 * CMake : https://cmake.org/
+* Python development headers, when building the Python module (e.g. `python3-dev` or `python3-devel`)
 
 Optional
 * ISPC : https://ispc.github.io/
@@ -45,13 +46,19 @@ For the best possible build experience it is recommended to install the stk depe
 > sh build_python.sh <flags>
 ```
 
-Flags accepted by `setup.py`:
-* `--use-cuda`: build with CUDA support
-* `--use-ispc`: build with ISPC support
-* `--use-itk`: build with ITK support
-* `--debug`: build with debug symbols
+The script installs `python-stk` from the bundled submodule and builds the `pydeform` package into `dist/`. Flags are forwarded to CMake, e.g. `-DDF_USE_CUDA=ON` to build with CUDA support. See [C++ section](#build_options) for available build options.
 
-Additional flags starting with `-D` are also recognised and forwarded to CMake. See [C++ section](#build_options) for available build options.
+`pydeform` and `python-stk` need to be built from the same checkout, since the two modules share types and must be compiled with the same version of pybind11.
+
+#### Wheels
+
+Wheels for multiple Python versions are built with [cibuildwheel](https://cibuildwheel.pypa.io), which requires Docker or Podman:
+
+```
+> pipx run cibuildwheel --platform linux
+```
+
+The wheels are written to `wheelhouse/`. The same is done for each push by the GitHub Actions workflow in `.github/workflows/wheels.yml`.
 
 ### C++
 
@@ -89,7 +96,7 @@ Then run the build with the following arguments: `-DCMAKE_C_COMPILER=gcc-10 -DCM
 
 E.g.:
 ```
-> sh build_python.sh --use-cuda -DCMAKE_C_COMPILER=gcc-10 -DCMAKE_CXX_COMPILER=g++-10 -DCMAKE_CUDA_HOST_COMPILER=g++-10
+> sh build_python.sh -DDF_USE_CUDA=ON -DCMAKE_C_COMPILER=gcc-10 -DCMAKE_CXX_COMPILER=g++-10 -DCMAKE_CUDA_HOST_COMPILER=g++-10
 ```
 
 # Run

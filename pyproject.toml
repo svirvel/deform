@@ -15,3 +15,17 @@ dependencies = [
     "python-stk",
     "PyYAML",
 ]
+
+[tool.cibuildwheel]
+build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
+skip = "*-musllinux_*"
+archs = "auto64"
+# pydeform and python-stk must be built with the same pybind11, so test
+# against python-stk built from the submodule rather than the one on PyPI
+before-test = "pip install {project}/third_party/stk"
+test-requires = ["SimpleITK"]
+test-command = "python -m unittest discover -s {project}/test"
+
+[tool.cibuildwheel.config-settings]
+# Wheels are built for distribution, so don't optimise for the build machine
+"cmake.define.DF_NON_PORTABLE" = "OFF"
